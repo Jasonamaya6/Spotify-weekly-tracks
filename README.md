@@ -38,8 +38,8 @@ Project Status
 🎧 Top Charts Supplementation: If your listening history is limited, the project will supplement the playlist with trending tracks from the Top 100 USA.
 
 ## Tech Stack
-Python
-Spotipy: Python library for the Spotify Web API
-Spotify Web API: For fetching user data and managing playlists
-OAuth2: For secure access to user data
-Netlify (Future Hosting)
+- Python
+- Spotipy: Python library for the Spotify Web API
+- Spotify Web API: For fetching user data and managing playlists
+- OAuth2: For secure access to user data
+- Netlify (Future Hosting)
