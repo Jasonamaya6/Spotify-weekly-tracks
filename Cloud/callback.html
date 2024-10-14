@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify Callback</title>
+</head>
+<body>
+  <h1>Loading...</h1>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');  // Capture the authorization code
+
+    if (code) {
+      console.log("Authorization code received:", code);
+
+      // Send the authorization code to your serverless function to get the access token
+      fetch(`/.netlify/functions/get-token?code=${code}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log("Token data received:", data);
+          localStorage.setItem('spotify_access_token', data.access_token);  // Save the access token
+          localStorage.setItem('spotify_refresh_token', data.refresh_token);  // Save the refresh token
+          window.location.href = "/index.html";  // Redirect to the main page
+        })
+        .catch(error => {
+          console.error("Error fetching token:", error);
+          alert("Something went wrong! " + error.message);
+        });
+    } else {
+      alert('No authorization code found!');
+    }
+  </script>
+</body>
+</html>

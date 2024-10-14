@@ -1,0 +1,19 @@
+## **Step 1: Setup Authentication and Connect to Spotify API**
+1. **Register your Spotify application** on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
+2. Obtain the `Client ID`, `Client Secret`, and `Redirect URI`.
+3. Set up Spotipy to use OAuth2 and request `user-top-read` permission.
+
+## **Step 2: Retrieve User's Top Tracks**
+1. **Request user's top 25 tracks** for the current week using `sp.current_user_top_tracks(limit=25, time_range='short_term')`.
+2. If less than 25 tracks:
+    - Retrieve tracks from `time_range='medium_term'` (last 6 months).
+3. If still below 25:
+    - **Fetch Top 100 USA** using an appropriate API or third-party service.
+
+## **Step 3: Create a Playlist**
+1. Create a new playlist for the user with the title: `My Top 25 of the Week`.
+2. Add the collected tracks to this new playlist using `sp.user_playlist_add_tracks()`.
+
+## **Step 4: Error Handling & Reporting**
+1. Handle `HTTP` errors or failed API requests.
+2. Display success message once playlist is generated or error message if failed.

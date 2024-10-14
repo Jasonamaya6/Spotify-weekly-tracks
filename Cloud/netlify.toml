@@ -1,0 +1,12 @@
+[build]
+  functions = "Function"  # Point to your functions folder
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/callback"
+  to = "/callback.html"
+  status = 200
