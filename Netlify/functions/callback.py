@@ -26,11 +26,9 @@ class handler(BaseHTTPRequestHandler):
             token_response = requests.post(token_url, data=token_data)
             token_info = token_response.json()
 
-            # Store the access and refresh token securely (e.g., in a database or return to the user)
             access_token = token_info["access_token"]
             refresh_token = token_info["refresh_token"]
 
-            # Redirect the user to a success page or process the token further
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
