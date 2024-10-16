@@ -5,7 +5,7 @@ from http.server import BaseHTTPRequestHandler
 
 # Spotify credentials
 client_id = os.environ['SPOTIFY_CLIENT_ID']
-redirect_uri = "https://your-netlify-site.netlify.app/.netlify/functions/callback"
+redirect_uri = "https://heavyrotationspotify.netlify.app/.netlify/functions/callback"
 
 
 class handler(BaseHTTPRequestHandler):
