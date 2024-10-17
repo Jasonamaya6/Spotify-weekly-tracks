@@ -13,7 +13,7 @@ function generateDynamicDescription() {
         "Great things never come from comfort zones. Keep pushing forward...",
         "Set and accomplish an uncomfortable goal this week!",
         "Life is a journey, not a race. Embrace every moment...",
-        "Slow down... life is chill...",
+        "Slowwwwwwwwwwwww down... life is chillllllllllllll... Apreciate what these moments dont worry about the future",
         "Open Arms better be in the list this week.",
         "Text someone you love!",
         "Set a goal, use music as motivation, and get this money!",
