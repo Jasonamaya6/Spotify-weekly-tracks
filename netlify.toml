@@ -1,6 +1,3 @@
 [build]
-  publish = ""  # Leave empty if your index.html is in the root folder
-  functions = "netlify/functions"  # Points to the functions directory
-
-[functions]
-  directory = "netlify/functions"
+  publish = ""
+  functions = "functions"  # Change this to point directly to the root-level functions folder
