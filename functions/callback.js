@@ -4,32 +4,25 @@ const fetch = require('node-fetch');
 // Function to generate dynamic description
 function generateDynamicDescription() {
     const descriptions = [
-        "Believe you can baby and you're halfway there..... ",
-        "Your time is limited, don't waste it living someone else's life. Beutiful quote that I go by from Steve Jobs",
-        "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight. – Proverbs 3:5-6",
-        "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go. – Joshua 1:9",
-        "If your feeling down this week just know everything will be okay. Take a moment and reflect your journey and what got you to the position you are in rightnow.",
-        "Share one strong, positive word with me, and together we’ll hone it and live by it for the week.",
-        "Great things never come from comfort zones. Keep pushing forward and break through your limits.",
-        "For this week baby, I want you to accomplish a uncomfortable goal. Set it and complete! An individual grows when they step out of their comfort zone",
-        "Life is a journey, not a race. Embrace every moment and savor the progress you’re making.",
-        "Sllllloooooowwwwwwww downnnnnnnnn.... Life is chilllllll and take a look around and appreciate life for its moments",
-        "Open Arms better be in the list for this week",
-        "Mhm lol",
-        "Text a person and tell them you love them, they'll appreciate it",
-        "Set a goal for this week, use music as a motivator and lets get this MONNNNEEEYYYYYY",
-        "If she aint hawk tuaing i gonna talk tua.... Sorry needed to add this one for the week lol.",
-        "Dont forget to smile this week!!!!!!!!! Love U",
-        "Let go of the past, embrace the present, and have faith in the future. You’re right where you need to be.",
-        "One day we will have a big house, two dogs, and a twea in our hand !!!! LOL",
-        "This week I want you to compliment the people around you theyll appreciate your positivity.",
-        "If you see this one I owe you CFA or Chipotle for my big backkkkkkkkk!",
-        "SMILEEEEE BECAUSE YOU ARE ABLE BODY",
-        "There are no words in the english that explain how perfect you are... so i am just stickign with the word perfect",
-        "This is the last quote of them all I hope to forever be with you i cant wait for this journey",
-        "Lucky and Stitch love you"
+        "Believe you can baby and you're halfway there.....",
+        "Your time is limited, don't waste it living someone else's life. Beautiful quote by Steve Jobs.",
+        "Trust in the Lord with all your heart and lean not on your own understanding... – Proverbs 3:5-6",
+        "Be strong and courageous... – Joshua 1:9",
+        "If you're feeling down this week, just know everything will be okay...",
+        "Share one strong, positive word with me, and together we’ll live by it for the week.",
+        "Great things never come from comfort zones. Keep pushing forward...",
+        "Set and accomplish an uncomfortable goal this week!",
+        "Life is a journey, not a race. Embrace every moment...",
+        "Slow down... life is chill...",
+        "Open Arms better be in the list this week.",
+        "Text someone you love!",
+        "Set a goal, use music as motivation, and get this money!",
+        "Don’t forget to smile this week! Love U.",
+        "This week, compliment the people around you—they'll appreciate it!",
+        "SMILE! Because you are able-bodied.",
+        "You are perfect in every way.",
+        "This is the last quote, but our love story will never end!"
     ];
-
     const randomIndex = Math.floor(Math.random() * descriptions.length);
     return descriptions[randomIndex];
 }
@@ -164,74 +157,73 @@ exports.handler = async function(event, context) {
 
     // Step 5: Return a response to the user
     return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'text/html' },
-      body: `
-          <html>
-          <head>
-              <title>Our Love Playlist - A Year to Remember</title>
-              <style>
-                  body {
-                      background-color: #fbeae7;
-                      font-family: 'Arial', sans-serif;
-                      color: #333;
-                      text-align: center;
-                      padding: 50px;
-                  }
-                  h1 {
-                      color: #e63946;
-                      font-size: 48px;
-                      margin-bottom: 20px;
-                  }
-                  p {
-                      font-size: 20px;
-                      line-height: 1.6;
-                      color: #555;
-                  }
-                  a {
-                      display: inline-block;
-                      background-color: #e63946;
-                      color: #fff;
-                      text-decoration: none;
-                      padding: 10px 20px;
-                      font-size: 18px;
-                      border-radius: 10px;
-                      margin-top: 20px;
-                      transition: background-color 0.3s ease;
-                  }
-                  a:hover {
-                      background-color: #c72e3b;
-                  }
-                  .celebration {
-                      font-size: 24px;
-                      color: #7b2cbf;
-                      margin-top: 40px;
-                      font-weight: bold;
-                  }
-                  .heart {
-                      color: #ff6b6b;
-                  }
-              </style>
-          </head>
-          <body>
-              <h1>Here's to Us!</h1>
-              <p>
-                  My dearest love, as we celebrate our 1-year anniversary (October 24th, 2024), 
-                  I wanted to give you something special. 
-                  <strong>Love U</strong> is a playlist made just for you, 
-                  filled with the songs you've been vibing to lately.
-              </p>
-              <p>
-                  May these tracks remind you of the memories we've shared 
-                  and the moments we will create in the years to come. 
-                  I hope this playlist brings a smile to your face like you do to mine every day.
-              </p>
-              <a href="${playlistData.external_urls.spotify}" target="_blank">Listen to Our Playlist</a>
-              <p class="celebration">
-                  Here's to 1 year and many more to come! </p>
-          </body>
-          </html>
-      `,
-  };
-  
+        statusCode: 200,
+        headers: { 'Content-Type': 'text/html' },
+        body: `
+            <html>
+            <head>
+                <title>Our Love Playlist - A Year to Remember</title>
+                <style>
+                    body {
+                        background-color: #fbeae7;
+                        font-family: 'Arial', sans-serif;
+                        color: #333;
+                        text-align: center;
+                        padding: 50px;
+                    }
+                    h1 {
+                        color: #e63946;
+                        font-size: 48px;
+                        margin-bottom: 20px;
+                    }
+                    p {
+                        font-size: 20px;
+                        line-height: 1.6;
+                        color: #555;
+                    }
+                    a {
+                        display: inline-block;
+                        background-color: #e63946;
+                        color: #fff;
+                        text-decoration: none;
+                        padding: 10px 20px;
+                        font-size: 18px;
+                        border-radius: 10px;
+                        margin-top: 20px;
+                        transition: background-color 0.3s ease;
+                    }
+                    a:hover {
+                        background-color: #c72e3b;
+                    }
+                    .celebration {
+                        font-size: 24px;
+                        color: #7b2cbf;
+                        margin-top: 40px;
+                        font-weight: bold;
+                    }
+                    .heart {
+                        color: #ff6b6b;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Here's to Us!</h1>
+                <p>
+                    My dearest love, as we celebrate our 1-year anniversary (October 24th, 2024), 
+                    I wanted to give you something special. 
+                    <strong>Love U</strong> is a playlist made just for you, 
+                    filled with the songs you've been vibing to lately.
+                </p>
+                <p>
+                    May these tracks remind you of the memories we've shared 
+                    and the moments we will create in the years to come. 
+                    I hope this playlist brings a smile to your face like you do to mine every day.
+                </p>
+                <a href="${playlistData.external_urls.spotify}" target="_blank">Listen to Our Playlist</a>
+                <p class="celebration">
+                    Here's to 1 year and many more to come! </p>
+            </body>
+            </html>
+        `,
+    };
 };
