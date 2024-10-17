@@ -166,3 +166,24 @@ async function fetchPlaylistTracks(access_token, playlist_id, limit) {
 
     return await response.json();
 }
+
+// Function to add tracks to the playlist
+async function addTracksToPlaylist(access_token, playlistId, trackUris) {
+    const addTracksUrl = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+    const addTracksResponse = await fetch(addTracksUrl, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ uris: trackUris })
+    });
+
+    if (!addTracksResponse.ok) {
+        const errorText = await addTracksResponse.text();
+        console.error("Failed to add tracks to the playlist:", errorText);
+        throw new Error("Failed to add tracks to the playlist.");
+    }
+
+    return await addTracksResponse.json();
+}
