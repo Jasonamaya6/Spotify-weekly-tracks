@@ -164,17 +164,75 @@ exports.handler = async function(event, context) {
 
     // Step 5: Return a response to the user
     return {
-        statusCode: 200,
-        headers: { 'Content-Type': 'text/html' },
-        body: `
-            <html>
-            <head><title>Heavy Rotation</title></head>
-            <body>
-                <h1>Here to 1 and many more !!!</h1>
-                <p>My love, to celebrate our 1 year together (October 24th, 2024), I present to you the playlist: <strong>${playlistData.name}</strong>! It's a mix of songs you've been listening to a lot over the weeks. I hope you love it!</p>
-                <p><a href="${playlistData.external_urls.spotify}" target="_blank">Heavy Rotation Mix</a></p>
-            </body>
-            </html>
-        `,
-    };
+      statusCode: 200,
+      headers: { 'Content-Type': 'text/html' },
+      body: `
+          <html>
+          <head>
+              <title>Our Love Playlist - A Year to Remember</title>
+              <style>
+                  body {
+                      background-color: #fbeae7;
+                      font-family: 'Arial', sans-serif;
+                      color: #333;
+                      text-align: center;
+                      padding: 50px;
+                  }
+                  h1 {
+                      color: #e63946;
+                      font-size: 48px;
+                      margin-bottom: 20px;
+                  }
+                  p {
+                      font-size: 20px;
+                      line-height: 1.6;
+                      color: #555;
+                  }
+                  a {
+                      display: inline-block;
+                      background-color: #e63946;
+                      color: #fff;
+                      text-decoration: none;
+                      padding: 10px 20px;
+                      font-size: 18px;
+                      border-radius: 10px;
+                      margin-top: 20px;
+                      transition: background-color 0.3s ease;
+                  }
+                  a:hover {
+                      background-color: #c72e3b;
+                  }
+                  .celebration {
+                      font-size: 24px;
+                      color: #7b2cbf;
+                      margin-top: 40px;
+                      font-weight: bold;
+                  }
+                  .heart {
+                      color: #ff6b6b;
+                  }
+              </style>
+          </head>
+          <body>
+              <h1>Here's to Us! <span class="heart">❤️</span></h1>
+              <p>
+                  My dearest love, as we celebrate our 1-year anniversary (October 24th, 2024), 
+                  I wanted to give you something special. 
+                  <strong>Love U</strong> is a playlist made just for you, 
+                  filled with the songs you've been vibing to lately.
+              </p>
+              <p>
+                  May these tracks remind you of the memories we've shared 
+                  and the moments we will create in the years to come. 
+                  I hope this playlist brings a smile to your face like you do to mine every day.
+              </p>
+              <a href="${playlistData.external_urls.spotify}" target="_blank">Listen to Our Playlist</a>
+              <p class="celebration">
+                  Here's to 1 year and many more to come! <span class="heart">💖</span>
+              </p>
+          </body>
+          </html>
+      `,
+  };
+  
 };
