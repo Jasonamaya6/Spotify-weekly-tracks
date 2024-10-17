@@ -115,14 +115,23 @@ exports.handler = async function(event) {
             headers: { 'Content-Type': 'text/html' },
             body: `
                 <html>
-                <head><title>Spotify Playlist Created</title></head>
-                <body>
-                    <h1>Playlist Created Successfully!</h1>
-                    <p><a href="${playlistData.external_urls.spotify}" target="_blank">Click here to listen to the playlist</a></p>
+                <head><title>Your Special Playlist is Ready!</title></head>
+                <body style="font-family: Arial, sans-serif; text-align: center; background-color: #fff0f5; color: #333;">
+                    <h1 style="color: #ff69b4; font-size: 48px;">Your Playlist is Ready, Love! 💖</h1>
+                    <p style="font-size: 22px; color: #333;">
+                        I’ve created something just for you—a playlist that will grow with songs you're loving! 
+                        I hope every track brings a smile to your face and reminds you of our special moments. 
+                        <br><br>
+                        <a href="${playlistData.external_urls.spotify}" target="_blank" style="font-size: 20px; color: #ff69b4; text-decoration: none;">
+                            Click here to listen to your personalized playlist 🎶
+                        </a>
+                    </p>
+                    <p style="font-size: 18px; color: #333;">With all my love, always. 💕</p>
                 </body>
                 </html>
             `,
         };
+        
 
     } catch (error) {
         console.error("Unexpected error: ", error);  // Catch any other unexpected errors
