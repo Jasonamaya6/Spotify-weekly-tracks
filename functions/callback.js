@@ -15,7 +15,7 @@ function generateDynamicDescription() {
     return descriptions[randomIndex];
 }
 
-// Function to fetch top tracks for a specific time range
+// Function to fetch top tracks for a specific time range (last 4 weeks)
 async function fetchTopTracks(access_token, time_range, limit) {
     const topTracksUrl = `https://api.spotify.com/v1/me/top/tracks?time_range=${time_range}&limit=${limit}`;
     const response = await fetch(topTracksUrl, {
@@ -29,30 +29,6 @@ async function fetchTopTracks(access_token, time_range, limit) {
     }
 
     return await response.json();
-}
-
-// Function to fetch random tracks from user's saved library (liked songs)
-async function fetchSavedTracks(access_token, limit) {
-    const savedTracksUrl = `https://api.spotify.com/v1/me/tracks?limit=${limit}`;
-    const response = await fetch(savedTracksUrl, {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${access_token}` }
-    });
-
-    if (!response.ok) {
-        console.error("Failed to fetch saved tracks:", await response.text());
-        throw new Error("Failed to fetch saved tracks.");
-    }
-
-    const savedTracksData = await response.json();
-
-    // Check if the items field exists and contains data
-    if (!savedTracksData.items || savedTracksData.items.length === 0) {
-        console.warn("No saved tracks found in the user's library.");
-        return [];  // Return an empty array if no saved tracks are found
-    }
-
-    return savedTracksData.items.map(item => item.track.uri);  // Extract track URIs
 }
 
 // Function to add tracks to the playlist
@@ -75,6 +51,16 @@ async function addTracksToPlaylist(access_token, playlistId, trackUris) {
     return addTracksResponse.json();
 }
 
+// Hardcoded Top 100 US songs (Replace these with real Spotify URIs)
+const top100US = [
+    "spotify:track:4uLU6hMCjMI75M1A2tKUQC", // Example song 1
+    "spotify:track:2TpxZ7JUBn3uw46aR7qd6V", // Example song 2
+    "spotify:track:6rqhFgbbKwnb9MLmUQDhG6", // Example song 3
+    // Add more URIs to fill up to 100
+    // This is just placeholder data, replace it with the real "Top 100 US" track URIs
+];
+
+// Main function
 exports.handler = async function(event, context) {
     const client_id = process.env.SPOTIFY_CLIENT_ID;
     const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
@@ -107,24 +93,14 @@ exports.handler = async function(event, context) {
     const tokenData = await response.json();
     const access_token = tokenData.access_token;
 
-    // Step 1: Get the user's top 8 most played tracks of the last 4 weeks
-    const topTracksData = await fetchTopTracks(access_token, 'short_term', 8);
-    let trackUris = topTracksData.items.map(track => track.uri);  // Extract 8 track URIs
+    // Step 1: Get the user's top 25 most played tracks of the last 4 weeks
+    const topTracksData = await fetchTopTracks(access_token, 'short_term', 25);
+    let trackUris = topTracksData.items.map(track => track.uri);  // Extract track URIs
 
-    // Step 2: If less than 25 tracks, fetch random tracks from the user's saved library (liked songs)
+    // Step 2: If fewer than 25 tracks, fill with tracks from the Top 100 US playlist
     if (trackUris.length < 25) {
-        const savedTracks = await fetchSavedTracks(access_token, 50);  // Fetch 50 tracks from the user's library
         const remainingSlots = 25 - trackUris.length;
-
-        if (savedTracks.length === 0) {
-            console.warn("No additional saved tracks found, filling the playlist with existing tracks only.");
-        }
-
-        // Shuffle saved tracks and add random ones to fill remaining slots
-        const shuffledSavedTracks = savedTracks.sort(() => 0.5 - Math.random());
-        const randomSavedTracks = shuffledSavedTracks.slice(0, remainingSlots);
-
-        trackUris = trackUris.concat(randomSavedTracks);  // Add random saved tracks to the playlist
+        trackUris = trackUris.concat(top100US.slice(0, remainingSlots));  // Add enough tracks to fill up to 25
     }
 
     // Step 3: Create a new playlist
