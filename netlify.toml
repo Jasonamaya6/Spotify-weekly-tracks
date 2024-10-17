@@ -1,3 +1,6 @@
 [build]
-  publish = ""
-  functions = "functions"  # Change this to point directly to the root-level functions folder
+  publish = ""  # Set to 
+  functions = "functions"  # This is where your functions are located
+
+[functions]
+  directory = "functions"  # Directory containing the functions

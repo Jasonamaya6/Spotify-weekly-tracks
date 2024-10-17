@@ -37,7 +37,8 @@ def create_playlist(tracks):
     # 4. Add tracks to the newly created playlist
     sp.playlist_add_items(new_playlist['id'], track_uris)
 
-    print(f"🎶 Added {len(track_uris)} tracks to the playlist '{playlist_name}'!")
+    print(
+        f"🎶 Added {len(track_uris)} tracks to the playlist '{playlist_name}'!")
     print(f"🌐 Playlist Link: {new_playlist['external_urls']['spotify']}")
 
 
@@ -49,7 +50,8 @@ def main():
 
     # Fallback: Fill in with medium_term tracks if needed
     if len(user_top_tracks) < 25:
-        additional_tracks = sp.current_user_top_tracks(limit=25, time_range='medium_term')
+        additional_tracks = sp.current_user_top_tracks(
+            limit=25, time_range='medium_term')
         for item in additional_tracks['items']:
             if item not in user_top_tracks:  # Avoid duplicates
                 user_top_tracks.append(item)
@@ -59,7 +61,8 @@ def main():
     # Fallback: Use USA Top 100 Tracks if still under 25
     if len(user_top_tracks) < 25:
         usa_top_100_playlist_id = '37i9dQZEVXbLRQDuF5jeBp'
-        playlist_tracks = sp.playlist_tracks(usa_top_100_playlist_id, limit=100)
+        playlist_tracks = sp.playlist_tracks(
+            usa_top_100_playlist_id, limit=100)
 
         for item in playlist_tracks['items']:
             track = item['track']
