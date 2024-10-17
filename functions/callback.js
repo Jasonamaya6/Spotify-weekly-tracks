@@ -1,12 +1,11 @@
-const fs = require('fs');
 const querystring = require('querystring');
 const fetch = require('node-fetch');
 
 // Function to generate dynamic description
 function generateDynamicDescription() {
     const descriptions = [
-        "this is yeyc",
-        "DTHis is tecit",
+        "Your top hits of the week!",
+        "Fresh tracks just for you!",
         "These are the songs defining your vibe this week.",
         "Another week, another playlist!",
         "Curated based on your recent listening habits."
@@ -24,6 +23,11 @@ async function fetchTopTracks(access_token, time_range, limit) {
         headers: { 'Authorization': `Bearer ${access_token}` }
     });
 
+    if (!response.ok) {
+        console.error("Failed to fetch top tracks:", await response.text());
+        throw new Error("Failed to fetch top tracks.");
+    }
+
     return await response.json();
 }
 
@@ -35,7 +39,19 @@ async function fetchSavedTracks(access_token, limit) {
         headers: { 'Authorization': `Bearer ${access_token}` }
     });
 
+    if (!response.ok) {
+        console.error("Failed to fetch saved tracks:", await response.text());
+        throw new Error("Failed to fetch saved tracks.");
+    }
+
     const savedTracksData = await response.json();
+
+    // Check if the items field exists and contains data
+    if (!savedTracksData.items || savedTracksData.items.length === 0) {
+        console.warn("No saved tracks found in the user's library.");
+        return [];  // Return an empty array if no saved tracks are found
+    }
+
     return savedTracksData.items.map(item => item.track.uri);  // Extract track URIs
 }
 
@@ -50,6 +66,12 @@ async function addTracksToPlaylist(access_token, playlistId, trackUris) {
         },
         body: JSON.stringify({ uris: trackUris })
     });
+
+    if (!addTracksResponse.ok) {
+        console.error("Failed to add tracks to the playlist:", await addTracksResponse.text());
+        throw new Error("Failed to add tracks to the playlist.");
+    }
+
     return addTracksResponse.json();
 }
 
@@ -77,6 +99,11 @@ exports.handler = async function(event, context) {
         body: body,
     });
 
+    if (!response.ok) {
+        console.error("Failed to exchange authorization code for access token:", await response.text());
+        throw new Error("Failed to exchange authorization code.");
+    }
+
     const tokenData = await response.json();
     const access_token = tokenData.access_token;
 
@@ -88,6 +115,10 @@ exports.handler = async function(event, context) {
     if (trackUris.length < 25) {
         const savedTracks = await fetchSavedTracks(access_token, 50);  // Fetch 50 tracks from the user's library
         const remainingSlots = 25 - trackUris.length;
+
+        if (savedTracks.length === 0) {
+            console.warn("No additional saved tracks found, filling the playlist with existing tracks only.");
+        }
 
         // Shuffle saved tracks and add random ones to fill remaining slots
         const shuffledSavedTracks = savedTracks.sort(() => 0.5 - Math.random());
@@ -105,11 +136,16 @@ exports.handler = async function(event, context) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: 'Love U',
+            name: 'My Top 25 of the Week',
             description: generateDynamicDescription(),  // Dynamic description
             public: true
         })
     });
+
+    if (!playlistResponse.ok) {
+        console.error("Failed to create playlist:", await playlistResponse.text());
+        throw new Error("Failed to create playlist.");
+    }
 
     const playlistData = await playlistResponse.json();
     const playlistId = playlistData.id;
