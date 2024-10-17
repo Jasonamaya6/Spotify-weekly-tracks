@@ -1,6 +1,32 @@
 const querystring = require('querystring');
 const fetch = require('node-fetch');
 
+// Function to generate dynamic description
+function generateDynamicDescription() {
+    const descriptions = [
+        "Believe you can baby and you're halfway there.....",
+        "Your time is limited, don't waste it living someone else's life. Beautiful quote by Steve Jobs.",
+        "Trust in the Lord with all your heart and lean not on your own understanding... – Proverbs 3:5-6",
+        "Be strong and courageous... – Joshua 1:9",
+        "If you're feeling down this week, just know everything will be okay...",
+        "Share one strong, positive word with me, and together we’ll live by it for the week.",
+        "Great things never come from comfort zones. Keep pushing forward...",
+        "Set and accomplish an uncomfortable goal this week!",
+        "Life is a journey, not a race. Embrace every moment...",
+        "Slow down... life is chill...",
+        "Open Arms better be in the list this week.",
+        "Text someone you love!",
+        "Set a goal, use music as motivation, and get this money!",
+        "Don’t forget to smile this week! Love U.",
+        "This week, compliment the people around you—they'll appreciate it!",
+        "SMILE! Because you are able-bodied.",
+        "You are perfect in every way.",
+        "This is the last quote, but our love story will never end!"
+    ];
+    const randomIndex = Math.floor(Math.random() * descriptions.length);
+    return descriptions[randomIndex];
+}
+
 // Function to handle the Spotify API token exchange
 exports.handler = async function(event) {
     try {
