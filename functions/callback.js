@@ -4,11 +4,30 @@ const fetch = require('node-fetch');
 // Function to generate dynamic description
 function generateDynamicDescription() {
     const descriptions = [
-        "Your top hits of the week!",
-        "Fresh tracks just for you!",
-        "These are the songs defining your vibe this week.",
-        "Another week, another playlist!",
-        "Curated based on your recent listening habits."
+        "Believe you can baby and you're halfway there..... ",
+        "Your time is limited, don't waste it living someone else's life. Beutiful quote that I go by from Steve Jobs",
+        "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight. – Proverbs 3:5-6",
+        "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go. – Joshua 1:9",
+        "If your feeling down this week just know everything will be okay. Take a moment and reflect your journey and what got you to the position you are in rightnow.",
+        "Share one strong, positive word with me, and together we’ll hone it and live by it for the week.",
+        "Great things never come from comfort zones. Keep pushing forward and break through your limits.",
+        "For this week baby, I want you to accomplish a uncomfortable goal. Set it and complete! An individual grows when they step out of their comfort zone",
+        "Life is a journey, not a race. Embrace every moment and savor the progress you’re making.",
+        "Sllllloooooowwwwwwww downnnnnnnnn.... Life is chilllllll and take a look around and appreciate life for its moments",
+        "Open Arms better be in the list for this week",
+        "Mhm lol",
+        "Text a person and tell them you love them, they'll appreciate it",
+        "Set a goal for this week, use music as a motivator and lets get this MONNNNEEEYYYYYY",
+        "If she aint hawk tuaing i gonna talk tua.... Sorry needed to add this one for the week lol.",
+        "Dont forget to smile this week!!!!!!!!! Love U",
+        "Let go of the past, embrace the present, and have faith in the future. You’re right where you need to be.",
+        "One day we will have a big house, two dogs, and a twea in our hand !!!! LOL",
+        "This week I want you to compliment the people around you theyll appreciate your positivity.",
+        "If you see this one I owe you CFA or Chipotle for my big backkkkkkkkk!",
+        "SMILEEEEE BECAUSE YOU ARE ABLE BODY",
+        "There are no words in the english that explain how perfect you are... so i am just stickign with the word perfect",
+        "This is the last quote of them all I hope to forever be with you i cant wait for this journey",
+        "Lucky and Stitch love you"
     ];
 
     const randomIndex = Math.floor(Math.random() * descriptions.length);
@@ -109,7 +128,7 @@ exports.handler = async function(event, context) {
     if (trackUris.length < 25) {
         const playlistTracksData = await fetchPlaylistTracks(access_token, usa_top_100_playlist_id, 100);
         for (let item of playlistTracksData.items) {
-            const track = item.track.uri;  // Get the track URI
+            const track = item.track.uri; 
             if (!trackUris.includes(track)) {  // Avoid duplicates
                 trackUris.push(track);
                 if (trackUris.length === 25) break;  // Stop once we have 25 tracks
@@ -126,8 +145,8 @@ exports.handler = async function(event, context) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: 'My Top 25 of the Week',
-            description: generateDynamicDescription(),  // Dynamic description
+            name: 'Love U ❤️',
+            description: generateDynamicDescription(),  
             public: true
         })
     });
@@ -149,11 +168,11 @@ exports.handler = async function(event, context) {
         headers: { 'Content-Type': 'text/html' },
         body: `
             <html>
-            <head><title>Playlist Created</title></head>
+            <head><title>Heavy Rotation</title></head>
             <body>
-                <h1>Playlist Created!</h1>
-                <p>Your playlist <strong>${playlistData.name}</strong> has been created!</p>
-                <p><a href="${playlistData.external_urls.spotify}" target="_blank">Click here to view your playlist on Spotify</a></p>
+                <h1>Here to 1 and many more !!!</h1>
+                <p>My love, to celebrate our 1 year together (October 24th, 2024), I present to you the playlist: <strong>${playlistData.name}</strong>! It's a mix of songs you've been listening to a lot over the weeks. I hope you love it!</p>
+                <p><a href="${playlistData.external_urls.spotify}" target="_blank">Heavy Rotation Mix</a></p>
             </body>
             </html>
         `,
