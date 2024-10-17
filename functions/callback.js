@@ -31,6 +31,22 @@ async function fetchTopTracks(access_token, time_range, limit) {
     return await response.json();
 }
 
+// Function to fetch tracks from a specific playlist (e.g., USA Top 100)
+async function fetchPlaylistTracks(access_token, playlist_id, limit) {
+    const playlistTracksUrl = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?limit=${limit}`;
+    const response = await fetch(playlistTracksUrl, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${access_token}` }
+    });
+
+    if (!response.ok) {
+        console.error("Failed to fetch playlist tracks:", await response.text());
+        throw new Error("Failed to fetch playlist tracks.");
+    }
+
+    return await response.json();
+}
+
 // Function to add tracks to the playlist
 async function addTracksToPlaylist(access_token, playlistId, trackUris) {
     const addTracksUrl = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
@@ -51,20 +67,12 @@ async function addTracksToPlaylist(access_token, playlistId, trackUris) {
     return addTracksResponse.json();
 }
 
-// Hardcoded Top 100 US songs (Replace these with real Spotify URIs)
-const top100US = [
-    "spotify:track:4uLU6hMCjMI75M1A2tKUQC", // Example song 1
-    "spotify:track:2TpxZ7JUBn3uw46aR7qd6V", // Example song 2
-    "spotify:track:6rqhFgbbKwnb9MLmUQDhG6", // Example song 3
-    // Add more URIs to fill up to 100
-    // This is just placeholder data, replace it with the real "Top 100 US" track URIs
-];
-
-// Main function
 exports.handler = async function(event, context) {
     const client_id = process.env.SPOTIFY_CLIENT_ID;
     const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
     const redirect_uri = 'https://heavyrotationspotify.netlify.app/.netlify/functions/callback';
+    
+    const usa_top_100_playlist_id = '37i9dQZEVXbLRQDuF5jeBp';  // USA Top 100 Playlist ID
 
     // Get authorization code from query parameters
     const code = event.queryStringParameters.code;
@@ -97,10 +105,16 @@ exports.handler = async function(event, context) {
     const topTracksData = await fetchTopTracks(access_token, 'short_term', 25);
     let trackUris = topTracksData.items.map(track => track.uri);  // Extract track URIs
 
-    // Step 2: If fewer than 25 tracks, fill with tracks from the Top 100 US playlist
+    // Step 2: Fallback - If fewer than 25 tracks, use tracks from the USA Top 100 playlist
     if (trackUris.length < 25) {
-        const remainingSlots = 25 - trackUris.length;
-        trackUris = trackUris.concat(top100US.slice(0, remainingSlots));  // Add enough tracks to fill up to 25
+        const playlistTracksData = await fetchPlaylistTracks(access_token, usa_top_100_playlist_id, 100);
+        for (let item of playlistTracksData.items) {
+            const track = item.track.uri;  // Get the track URI
+            if (!trackUris.includes(track)) {  // Avoid duplicates
+                trackUris.push(track);
+                if (trackUris.length === 25) break;  // Stop once we have 25 tracks
+            }
+        }
     }
 
     // Step 3: Create a new playlist
