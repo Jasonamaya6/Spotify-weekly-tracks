@@ -70,7 +70,17 @@ exports.handler = async function(event, context) {
     const addTracksResult = await addTracksResponse.json();
 
     return {
-        statusCode: 200,
-        body: JSON.stringify({ message: 'Playlist created and tracks added!', playlistData, addTracksResult }),
-    };
+      statusCode: 200,
+      headers: { 'Content-Type': 'text/html' },
+      body: `
+          <html>
+          <head><title>Playlist Created</title></head>
+          <body>
+              <h1>Playlist Created!</h1>
+              <p>Your playlist <strong>${playlistData.name}</strong> has been created!</p>
+              <p><a href="${playlistData.external_urls.spotify}" target="_blank">Click here to view your playlist on Spotify</a></p>
+          </body>
+          </html>
+      `,
+  };
 };
