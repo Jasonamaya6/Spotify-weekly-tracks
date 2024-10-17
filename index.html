@@ -3,10 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Page</title>
+  <title>Spotify Playlist Generator</title>
 </head>
 <body>
-  <h1>Netlify Test Page</h1>
-  <p>If you see this page, the site is working correctly!</p>
+  <h1>My Weekly Top 25 Playlist</h1>
+  <p>Click the button below to log in with Spotify and generate your playlist:</p>
+
+  <!-- Spotify login button that redirects to your login function -->
+  <a href="/netlify/functions/spotify-login">
+    <button>Log in with Spotify</button>
+  </a>
+
+  <p>Once you're logged in, we'll generate your top 25 songs of the week automatically!</p>
 </body>
+
 </html>

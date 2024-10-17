@@ -1,6 +1,6 @@
 import os
 import requests
-from urllib.parse import urlencode, parse_qs
+from urllib.parse import parse_qs
 from http.server import BaseHTTPRequestHandler
 
 client_id = os.environ['SPOTIFY_CLIENT_ID']
@@ -10,6 +10,7 @@ redirect_uri = "https://heavyrotationspotify.netlify.app/.netlify/functions/call
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
+        # Parse the query parameters (Spotify sends the authorization code as a query param)
         query_params = parse_qs(self.path[1:])
         if "code" in query_params:
             auth_code = query_params["code"][0]
@@ -26,14 +27,16 @@ class handler(BaseHTTPRequestHandler):
             token_response = requests.post(token_url, data=token_data)
             token_info = token_response.json()
 
-            access_token = token_info["access_token"]
-            refresh_token = token_info["refresh_token"]
+            # Extract access and refresh tokens
+            access_token = token_info.get("access_token")
+            refresh_token = token_info.get("refresh_token")
 
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             self.wfile.write(
-                b"Spotify authentication successful. You can now generate your playlist.")
+                f"Spotify authentication successful. Access token: {access_token}".encode())
         else:
+            # Handle error (missing authorization code)
             self.send_response(400)
             self.end_headers()
