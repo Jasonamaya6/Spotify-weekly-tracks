@@ -214,7 +214,7 @@ exports.handler = async function(event, context) {
               </style>
           </head>
           <body>
-              <h1>Here's to Us! <span class="heart">❤️</span></h1>
+              <h1>Here's to Us!</h1>
               <p>
                   My dearest love, as we celebrate our 1-year anniversary (October 24th, 2024), 
                   I wanted to give you something special. 
@@ -228,8 +228,7 @@ exports.handler = async function(event, context) {
               </p>
               <a href="${playlistData.external_urls.spotify}" target="_blank">Listen to Our Playlist</a>
               <p class="celebration">
-                  Here's to 1 year and many more to come! <span class="heart">💖</span>
-              </p>
+                  Here's to 1 year and many more to come! </p>
           </body>
           </html>
       `,
